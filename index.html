@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quote Generator</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; background: #0b0c15; color: #e8e8f0; }
+  .glass { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px); }
+  .glow { box-shadow: 0 0 30px rgba(99,102,241,0.15); }
+</style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+<div class="w-full max-w-lg glass rounded-3xl p-8 glow">
+  <h1 class="text-3xl font-extrabold tracking-tight mb-1">Quote Generator</h1>
+  <p class="text-sm text-slate-400 mb-6">Build professional project quotes in seconds.</p>
+
+  <label class="block text-xs uppercase tracking-wide text-slate-400 mb-1">Project Type</label>
+  <select id="type" class="w-full mb-4 bg-[#12121f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+    <option value="design">Design - $120/hr</option>
+    <option value="dev">Development - $150/hr</option>
+    <option value="write">Writing - $90/hr</option>
+  </select>
+
+  <label class="block text-xs uppercase tracking-wide text-slate-400 mb-1">Hours</label>
+  <input id="hours" type="number" min="1" value="10" class="w-full mb-6 bg-[#12121f] border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
+  <div class="mb-6 p-5 rounded-2xl bg-gradient-to-br from-indigo-600/20 to-violet-600/20 border border-white/10">
+    <div class="text-xs text-slate-400">Estimated Quote</div>
+    <div id="quote" class="text-4xl font-black tracking-tight text-white">$1,500</div>
+    <div class="text-xs text-emerald-400 mt-1">Premium template upsell ready</div>
+  </div>
+
+  <a href="#" onclick="window.print(); return false;" class="block w-full text-center bg-indigo-500 hover:bg-indigo-600 transition rounded-2xl py-4 font-bold text-white shadow-lg shadow-indigo-500/20">Download / Print PDF</a>
+  <p class="text-[11px] text-center text-slate-500 mt-3">Monetize: add Stripe/PayPal link or bundle as paid template.</p>
+</div>
+
+<script>
+  const rates = { design: 120, dev: 150, write: 90 };
+  function update() {
+    const rate = rates[document.getElementById('type').value];
+    const hours = parseInt(document.getElementById('hours').value) || 1;
+    document.getElementById('quote').textContent = '$' + (rate * hours).toLocaleString();
+  }
+  document.getElementById('type').addEventListener('change', update);
+  document.getElementById('hours').addEventListener('input', update);
+  update();
+</script>
+</body>
+</html>
